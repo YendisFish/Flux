@@ -9,6 +9,7 @@ namespace Flux.Main
         {
             Console.WriteLine("Starting Flux...");
             await DCHandler.RunAsync();
+            Console.WriteLine("Stopping Flux...");
         }
     }
 }

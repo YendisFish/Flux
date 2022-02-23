@@ -1,7 +1,9 @@
+using System.Threading.Channels;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using Flux.Main.Handlers.Commands;
+using Flux.Main.Handlers.Events;
 using Flux.Main.Types;
 
 namespace Flux.Main.Handlers
@@ -27,8 +29,12 @@ namespace Flux.Main.Handlers
             
             cex.RegisterCommands<Basic>();
             cex.RegisterCommands<Ticket>();
-
+            
             client.MessageCreated += Events.MessageCreated.Process;
+            client.MessageReactionAdded += ReactionCreated.Process;
+
+            await client.ConnectAsync();
+            await Task.Delay(-1);
         }
     }
 }

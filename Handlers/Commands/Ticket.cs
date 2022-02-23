@@ -3,7 +3,9 @@ using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.EventArgs;
 using Flux.Main.Types;
+using Newtonsoft.Json;
 
 namespace Flux.Main.Handlers.Commands
 {
@@ -24,7 +26,23 @@ namespace Flux.Main.Handlers.Commands
 
             DiscordMessage msg = await ticket.SendMessageAsync($"<@!{member.Id.ToString()}> <@!{null}>");
 
-            return new TicketType(ticket, msg);
+            TicketType ret = new TicketType(ticket, msg);
+
+            if (File.Exists("./opentickets.json"))
+            {
+                List<TicketType> tickets = JsonConvert.DeserializeObject<List<TicketType>>(File.ReadAllText("./opentickets.json"));
+                tickets.Add(ret);
+                await File.WriteAllTextAsync("./opentickets.json", JsonConvert.SerializeObject(tickets));
+            }
+            else
+            {
+                File.Create("./opentickets.json").Close();
+                List<TicketType> tickets = new();
+                tickets.Add(ret);
+                await File.WriteAllTextAsync("./opentickets.json", JsonConvert.SerializeObject(tickets));
+            }
+
+            return ret;
         }
     }
 }
