@@ -1,7 +1,9 @@
+using System.Runtime.InteropServices.ComTypes;
+using CSL.SQL;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
-using Flux.Main.Types;
-using Newtonsoft.Json;
+using Flux.Main.Handlers.Commands;
+using Flux.SQL.Types;
 
 namespace Flux.Main.Handlers.Events
 {
@@ -9,25 +11,29 @@ namespace Flux.Main.Handlers.Events
     {
         public static async Task Process(DiscordClient cli, MessageReactionAddEventArgs e)
         {
-            List<TicketType>? tickets = JsonConvert.DeserializeObject<List<TicketType>>(File.ReadAllText("./opentickets.json"));
-            List<TicketType> n = new();
-            
-            foreach (TicketType ticket in tickets ?? new List<TicketType>())
+            using (SQLDB sql = await SQL.SQLHandler.GetSql())
             {
-                if (ticket.Channel.Id == e.Message.Channel.Id)
+                AutoClosingEnumerable<TicketType> ticketsraw = await TicketType.Select(sql);
+                List<TicketType> tickets = new();
+                tickets.AddRange(ticketsraw);
+
+                foreach (TicketType ticket in tickets)
                 {
-                    if (e.Message.Id == ticket.Message.Id)
+                    try
                     {
-                        Console.WriteLine("Skipping current");
+                        if (ticket.Id == e.Message.Id.ToLong())
+                        {
+                            await e.Channel.DeleteAsync();
+                            //Maybe truncate table?
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        Console.WriteLine("Failed on reaction event handler");
                     }
                 }
-                else
-                {
-                    n.Add(ticket);
-                }
             }
-
-            await File.WriteAllTextAsync("./opentickets.json", JsonConvert.SerializeObject(n));
         }
     }
 }

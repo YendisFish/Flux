@@ -4,7 +4,6 @@ using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using Flux.Main.Handlers.Commands;
 using Flux.Main.Handlers.Events;
-using Flux.Main.Types;
 
 namespace Flux.Main.Handlers
 {
@@ -14,7 +13,7 @@ namespace Flux.Main.Handlers
         {
             DiscordClient client = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "",
+                Token = "OTQ2MjE5OTc0ODE5NzM3NjMw.YhbiBQ.j0PgHbSFItLnX4er66E0MYQeGOw",
                 TokenType = TokenType.Bot,
             });
 
@@ -27,8 +26,8 @@ namespace Flux.Main.Handlers
 
             CommandsNextExtension cex = client.UseCommandsNext(cconfig);
             
-            cex.RegisterCommands<Basic>();
-            cex.RegisterCommands<Ticket>();
+            //cex.RegisterCommands<Basic>();
+            cex.RegisterCommands<Ticket>(); 
             
             client.MessageCreated += Events.MessageCreated.Process;
             client.MessageReactionAdded += ReactionCreated.Process;

@@ -12,6 +12,9 @@ namespace Flux.Main
             CSL.DependencyInjection.NpgsqlConnectionStringConstructor = () => new Npgsql.NpgsqlConnectionStringBuilder();
             CSL.DependencyInjection.SslModeConverter = (x) => (Npgsql.SslMode)x;
 
+            //SQL init
+            await SQL.SQLHandler.Init();
+            
             //Application startup
             Console.WriteLine("Starting Flux...");
             await DCHandler.RunAsync();

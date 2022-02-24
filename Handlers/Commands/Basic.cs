@@ -8,7 +8,7 @@ namespace Flux.Main.Handlers.Commands
     public class Basic : BaseCommandModule
     {
         [Command("help")]
-        public static async Task Help(CommandContext ctx)
+        public async Task Help(CommandContext ctx)
         {
             await ctx.RespondAsync("Help message not yet implemented!");
         }

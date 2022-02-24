@@ -1,0 +1,8 @@
+[Metadata]
+Table Name = TicketType
+Namespace = Flux.SQL.Types
+Primary Keys = 1
+
+[Columns]
+Id = LONG
+MessageId = LONG
