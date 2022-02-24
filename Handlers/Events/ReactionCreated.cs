@@ -11,6 +11,7 @@ namespace Flux.Main.Handlers.Events
         {
             List<TicketType>? tickets = JsonConvert.DeserializeObject<List<TicketType>>(File.ReadAllText("./opentickets.json"));
             List<TicketType> n = new();
+            
             foreach (TicketType ticket in tickets ?? new List<TicketType>())
             {
                 if (ticket.Channel.Id == e.Message.Channel.Id)

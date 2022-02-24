@@ -44,6 +44,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "CommonStructureLibrary": {
+              "target": "Package",
+              "version": "[2022.1.21, )"
+            },
             "DSharpPlus": {
               "target": "Package",
               "version": "[4.1.0, )"
@@ -55,6 +59,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.0-preview.1, )"
             }
           },
           "imports": [

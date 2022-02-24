@@ -1,0 +1,11 @@
+﻿[Metadata]
+Table Name = ServerEntry
+Namespace = Flux.SQL.Types
+Primary Keys = 1
+
+[Columns]
+Id = LONG
+Type = VARCHAR
+Author = VARCHAR
+Content = VARCHAR
+Date = TIMESTAMP

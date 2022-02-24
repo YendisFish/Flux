@@ -30,15 +30,14 @@ namespace Flux.Main.Handlers.Commands
 
             if (File.Exists("./opentickets.json"))
             {
-                List<TicketType> tickets = JsonConvert.DeserializeObject<List<TicketType>>(File.ReadAllText("./opentickets.json"));
-                tickets.Add(ret);
+                List<TicketType>? tickets = JsonConvert.DeserializeObject<List<TicketType>>(File.ReadAllText("./opentickets.json")) ?? new List<TicketType>() { ret };
+                tickets?.Add(ret);
                 await File.WriteAllTextAsync("./opentickets.json", JsonConvert.SerializeObject(tickets));
             }
             else
             {
-                File.Create("./opentickets.json").Close();
                 List<TicketType> tickets = new();
-                tickets.Add(ret);
+                tickets?.Add(ret);
                 await File.WriteAllTextAsync("./opentickets.json", JsonConvert.SerializeObject(tickets));
             }
 
